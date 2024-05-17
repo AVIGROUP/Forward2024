@@ -1,0 +1,21 @@
+Here are the main improvements and fixes:
+
+1. **Reentrancy Protection**: The contract now inherits from the `ReentrancyGuard` contract from OpenZeppelin, and the `deposit` and `withdraw` functions are protected with the `nonReentrant` modifier to prevent reentrancy attacks.
+
+2. **Token Allowance Check**: The `deposit` function now checks if the user has approved the vault contract to transfer the specified amount of tokens. If the allowance is insufficient, the transaction reverts.
+
+3. **Withdrawal Fee**: A withdrawal fee percentage has been introduced, which can be set during contract deployment. The withdrawal fee is deducted from the amount of tokens to be withdrawn.
+
+4. **Nonce for Signature Validation**: Instead of using a separate `_nonce` parameter, the contract now uses a mapping `nonces` to store and validate the nonce for each user. This prevents nonce reuse and replay attacks.
+
+5. **Events**: `Deposit` and `Withdrawal` events have been added to improve transparency and enable off-chain monitoring.
+
+6. **Error Handling**: More descriptive error messages have been added for better error handling.
+
+7. **Withdrawal Fee Update**: A new function `updateWithdrawalFeePercentage` has been added, which allows the contract owner to update the withdrawal fee percentage. This function includes a check to ensure the fee percentage does not exceed 10%.
+
+8. **Constructor Update**: The constructor now accepts the withdrawal fee percentage as a parameter.
+
+9. **Gas Optimization**: The `validSig` modifier has been optimized by calculating the message hash only once, instead of recalculating it inside the `ECDSA.recover` function.
+
+These improvements enhance the security, functionality, and maintainability of the Vault contract. However, it is still recommended to perform thorough testing and auditing before deploying the contract to a production environment.
